@@ -118,30 +118,25 @@ section.chapter > .sub{
   .flow .arrow{transform:rotate(90deg); margin:0 auto}
 }
 
-/* Corp structure */
-.org{
-  display:grid; grid-template-rows:auto auto auto; gap:18px; margin:18px 0 8px;
+/* SVG diagrams */
+.diagram{
+  width:100%; height:auto; display:block; margin:18px auto;
+  background:var(--paper); border:1px solid var(--line); border-radius:14px;
+  box-shadow:var(--shadow); padding:10px;
 }
-.org .row{display:grid; gap:12px}
-.org .row.r1{grid-template-columns:1fr; justify-items:center}
-.org .row.r2{grid-template-columns:repeat(3,1fr)}
-.org .row.r3{grid-template-columns:repeat(4,1fr)}
-.org .box{
-  background:var(--paper); border:1px solid var(--line-strong); border-radius:10px;
-  padding:14px 14px; text-align:center; font-size:13.5px; min-height:64px;
-  display:flex; flex-direction:column; justify-content:center;
+.diagram text{font-family:"Noto Sans JP","Inter",sans-serif;}
+.legend{
+  display:flex; flex-wrap:wrap; gap:14px; font-size:12px; color:var(--ink-soft);
+  margin:6px 4px 18px; padding:10px 14px; background:var(--paper);
+  border:1px solid var(--line); border-radius:8px;
 }
-.org .box b{display:block; font-size:14px; margin-bottom:2px}
-.org .box small{color:var(--muted); font-size:11.5px}
-.org .box.holding{background:#f1efe8; border-color:#cfcabd}
-.org .box.invest{background:#e9f3ec; border-color:#bcd6c5}
-.org .box.proj{background:#ecf1f8; border-color:#c5d2e6}
-.org .box.asset{background:#fbeeea; border-color:#e9c8c1}
-.org .box.spv{background:var(--gold-bg); border-color:#d9c89a}
-.org .box.spv.dim{opacity:.55}
-@media (max-width:760px){
-  .org .row.r2,.org .row.r3{grid-template-columns:1fr 1fr}
-}
+.legend .item{display:inline-flex; align-items:center; gap:6px}
+.legend .swatch{display:inline-block; width:22px; height:0; border-top:2px solid;}
+.legend .swatch.green{border-color:#3f7a5c}
+.legend .swatch.red{border-color:#b94a3b}
+.legend .swatch.blue{border-color:#3a5a8a}
+.legend .swatch.gray{border-color:#7d7d75}
+.legend .swatch.dashed{border-style:dashed}
 
 /* CVML scope */
 .scope-grid{
@@ -348,21 +343,97 @@ footer{
   <h2>02 — AYUVAコーポレートストラクチャー</h2>
   <p class="sub">ホールディング配下に投資・建設・運営の3レイヤー、その下に複数SPV</p>
 
-  <div class="org">
-    <div class="row r1">
-      <div class="box holding" style="min-width:260px"><b>ホールディング</b><small>既存設立済</small></div>
-    </div>
-    <div class="row r2">
-      <div class="box invest"><b>投資会社</b><small>投資家資金の受入</small></div>
-      <div class="box proj"><b>プロジェクト管理</b><small>プロジェクト建設</small></div>
-      <div class="box asset"><b>アセット管理</b><small>プロジェクト運営</small></div>
-    </div>
-    <div class="row r3">
-      <div class="box spv"><b>プロジェクト1 SPV</b><small>建設・運営</small></div>
-      <div class="box spv dim"><b>プロジェクト2 SPV</b><small>横展開・別ロケーション</small></div>
-      <div class="box spv dim"><b>プロジェクト3 SPV</b><small>横展開・別ロケーション</small></div>
-      <div class="box spv dim"><b>プロジェクト4 SPV</b><small>横展開・別ロケーション</small></div>
-    </div>
+  <svg viewBox="0 0 900 640" class="diagram" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="ah-dark" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="#4a4a45"/>
+      </marker>
+      <marker id="ah-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="#3f7a5c"/>
+      </marker>
+      <marker id="ah-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="#3a5a8a"/>
+      </marker>
+      <marker id="ah-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="#b94a3b"/>
+      </marker>
+    </defs>
+
+    <!-- Holding (top center) -->
+    <rect x="350" y="20" width="200" height="64" rx="10" fill="#f1efe8" stroke="#cfcabd" stroke-width="1.5"/>
+    <text x="450" y="48" text-anchor="middle" font-weight="600" font-size="15">ホールディング</text>
+    <text x="450" y="69" text-anchor="middle" font-size="11" fill="#7d7d75">既存設立済</text>
+
+    <!-- Branching from Holding to 3 layers -->
+    <path d="M 450 84 L 450 130 L 130 130 L 130 200" fill="none" stroke="#4a4a45" stroke-width="1.4" marker-end="url(#ah-dark)"/>
+    <path d="M 450 84 L 450 200" fill="none" stroke="#4a4a45" stroke-width="1.4" marker-end="url(#ah-dark)"/>
+    <path d="M 450 84 L 450 130 L 770 130 L 770 200" fill="none" stroke="#4a4a45" stroke-width="1.4" marker-end="url(#ah-dark)"/>
+
+    <!-- 投資会社 (left) -->
+    <rect x="40" y="208" width="180" height="74" rx="10" fill="#e9f3ec" stroke="#bcd6c5" stroke-width="1.5"/>
+    <text x="130" y="238" text-anchor="middle" font-weight="600" font-size="14">投資会社</text>
+    <text x="130" y="258" text-anchor="middle" font-size="11" fill="#7d7d75">投資家資金の受入</text>
+
+    <!-- プロジェクト管理 (center) -->
+    <rect x="360" y="208" width="180" height="74" rx="10" fill="#ecf1f8" stroke="#c5d2e6" stroke-width="1.5"/>
+    <text x="450" y="238" text-anchor="middle" font-weight="600" font-size="14">プロジェクト管理</text>
+    <text x="450" y="258" text-anchor="middle" font-size="11" fill="#7d7d75">プロジェクト建設</text>
+
+    <!-- アセット管理 (right) -->
+    <rect x="680" y="208" width="180" height="74" rx="10" fill="#fbeeea" stroke="#e9c8c1" stroke-width="1.5"/>
+    <text x="770" y="238" text-anchor="middle" font-weight="600" font-size="14">アセット管理</text>
+    <text x="770" y="258" text-anchor="middle" font-size="11" fill="#7d7d75">プロジェクト運営</text>
+
+    <!-- SPV1 (center bottom) -->
+    <rect x="320" y="450" width="260" height="78" rx="10" fill="#f5efde" stroke="#d9c89a" stroke-width="1.8"/>
+    <text x="450" y="482" text-anchor="middle" font-weight="600" font-size="15">プロジェクト1 SPV</text>
+    <text x="450" y="504" text-anchor="middle" font-size="11" fill="#7d7d75">建設・運営対象</text>
+
+    <!-- 投資会社 → SPV1 (資金提供, GREEN, curved) -->
+    <path d="M 130 282 Q 130 400 320 480" fill="none" stroke="#3f7a5c" stroke-width="2" marker-end="url(#ah-green)"/>
+    <rect x="80" y="355" width="90" height="22" rx="4" fill="#fff" stroke="#bcd6c5"/>
+    <text x="125" y="370" text-anchor="middle" font-size="12" fill="#3f7a5c" font-weight="500">資金提供</text>
+
+    <!-- プロジェクト管理 → SPV (建設, BLUE, down) -->
+    <line x1="420" y1="282" x2="420" y2="450" stroke="#3a5a8a" stroke-width="2" marker-end="url(#ah-blue)"/>
+    <rect x="392" y="355" width="56" height="22" rx="4" fill="#fff" stroke="#c5d2e6"/>
+    <text x="420" y="370" text-anchor="middle" font-size="12" fill="#3a5a8a" font-weight="500">建設</text>
+
+    <!-- SPV → プロジェクト管理 (建設委託料, BLUE, up) -->
+    <line x1="480" y1="450" x2="480" y2="282" stroke="#3a5a8a" stroke-width="2" marker-end="url(#ah-blue)"/>
+    <rect x="450" y="355" width="86" height="22" rx="4" fill="#fff" stroke="#c5d2e6"/>
+    <text x="493" y="370" text-anchor="middle" font-size="12" fill="#3a5a8a" font-weight="500">建設委託料</text>
+
+    <!-- アセット管理 → SPV1 (運営, RED, curved) -->
+    <path d="M 770 282 Q 770 400 580 480" fill="none" stroke="#b94a3b" stroke-width="2" marker-end="url(#ah-red)"/>
+    <rect x="725" y="355" width="56" height="22" rx="4" fill="#fff" stroke="#e9c8c1"/>
+    <text x="753" y="370" text-anchor="middle" font-size="12" fill="#b94a3b" font-weight="500">運営</text>
+
+    <!-- SPV1 → アセット管理 (運営委託料, RED, dashed return) -->
+    <path d="M 575 452 Q 820 400 820 290" fill="none" stroke="#b94a3b" stroke-width="2" marker-end="url(#ah-red)" stroke-dasharray="5 3"/>
+    <rect x="775" y="395" width="100" height="22" rx="4" fill="#fff" stroke="#e9c8c1"/>
+    <text x="825" y="410" text-anchor="middle" font-size="12" fill="#b94a3b" font-weight="500">運営委託料</text>
+
+    <!-- Dimmed SPV2/3/4 expansion row -->
+    <rect x="60" y="570" width="220" height="50" rx="8" fill="#fafaf7" stroke="#d9c89a" stroke-dasharray="4 3" opacity="0.7"/>
+    <text x="170" y="595" text-anchor="middle" font-weight="500" font-size="13" fill="#7d7d75">プロジェクト2 SPV</text>
+    <text x="170" y="611" text-anchor="middle" font-size="10.5" fill="#a6a39a">横展開・別ロケーション</text>
+
+    <rect x="340" y="570" width="220" height="50" rx="8" fill="#fafaf7" stroke="#d9c89a" stroke-dasharray="4 3" opacity="0.7"/>
+    <text x="450" y="595" text-anchor="middle" font-weight="500" font-size="13" fill="#7d7d75">プロジェクト3 SPV</text>
+    <text x="450" y="611" text-anchor="middle" font-size="10.5" fill="#a6a39a">横展開・別ロケーション</text>
+
+    <rect x="620" y="570" width="220" height="50" rx="8" fill="#fafaf7" stroke="#d9c89a" stroke-dasharray="4 3" opacity="0.7"/>
+    <text x="730" y="595" text-anchor="middle" font-weight="500" font-size="13" fill="#7d7d75">プロジェクト4 SPV</text>
+    <text x="730" y="611" text-anchor="middle" font-size="10.5" fill="#a6a39a">横展開・別ロケーション</text>
+  </svg>
+
+  <div class="legend">
+    <span class="item"><span class="swatch dark" style="border-color:#4a4a45"></span> 親子関係</span>
+    <span class="item"><span class="swatch green"></span> 資金提供</span>
+    <span class="item"><span class="swatch blue"></span> 建設業務／委託料</span>
+    <span class="item"><span class="swatch red"></span> 運営業務</span>
+    <span class="item"><span class="swatch red dashed"></span> 委託料（還流）</span>
   </div>
 
   <div class="card">
@@ -448,40 +519,108 @@ footer{
   <h2>04 — 88M AED Year 1 シナリオ</h2>
   <p class="sub">SPV収益 88M AED に対する各レイヤーへの分配</p>
 
-  <div class="flow88">
-    <div class="node" style="background:var(--info-bg); border-color:#c5d2e6">
-      <b>投資家</b>
-      <span class="amt">配当 19.8M AED</span>
-      <small>SAFE → 株式転換後の優先配当（ティア別）</small>
-    </div>
-    <div class="node" style="background:var(--ok-bg); border-color:#bcd6c5">
-      <b>投資会社</b>
-      <span class="amt">受領 39.6M AED</span>
-      <small>SPVからの純利益還流を中央管理</small>
-    </div>
-    <div class="node" style="background:var(--gold-bg); border-color:#d9c89a">
-      <b>プロジェクトSPV</b>
-      <span class="amt">収益 88M AED</span>
-      <small>運営費 50% ＋ アセット管理料 5% を控除</small>
-    </div>
-  </div>
+  <svg viewBox="0 0 940 640" class="diagram" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="m-green2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="#3f7a5c"/>
+      </marker>
+      <marker id="m-red2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="#b94a3b"/>
+      </marker>
+      <marker id="m-gray2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="#7d7d75"/>
+      </marker>
+    </defs>
 
-  <div class="flow88">
-    <div class="node" style="background:#fbeeea; border-color:#e9c8c1">
-      <b>アセット管理会社</b>
-      <span class="amt">運営委託料 4.4M AED（5%）</span>
-      <small>同オーナー → ホールディングへ</small>
-    </div>
-    <div class="node" style="background:#f1efe8; border-color:#cfcabd">
-      <b>ホールディング（創業者持分）</b>
-      <span class="amt">配当 19.8M ＋ 管理料 4.4M AED</span>
-      <small>創業者の総取り分 24.2M</small>
-    </div>
-    <div class="node" style="background:var(--paper)">
-      <b>運営費</b>
-      <span class="amt" style="color:var(--ink-soft)">44.0M AED（50%）</span>
-      <small>人件費・賃料・光熱費</small>
-    </div>
+    <!-- Holding (top center) with checkmark -->
+    <rect x="360" y="20" width="240" height="100" rx="10" fill="#f1efe8" stroke="#cfcabd" stroke-width="1.8"/>
+    <circle cx="385" cy="42" r="10" fill="#3f7a5c"/>
+    <path d="M 380 42 L 384 46 L 391 38" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="490" y="46" text-anchor="middle" font-weight="600" font-size="15">ホールディング</text>
+    <text x="490" y="64" text-anchor="middle" font-size="11" fill="#7d7d75">創業者持分</text>
+    <text x="490" y="86" text-anchor="middle" font-size="12" fill="#4f5e36" font-weight="500">配当 19.8M AED</text>
+    <text x="490" y="104" text-anchor="middle" font-size="12" fill="#4f5e36" font-weight="500">＋ 管理料 4.4M AED</text>
+
+    <!-- Investor (left middle) -->
+    <rect x="40" y="240" width="180" height="110" rx="10" fill="#ecf1f8" stroke="#c5d2e6" stroke-width="1.5"/>
+    <text x="130" y="272" text-anchor="middle" font-weight="600" font-size="15">投資家</text>
+    <text x="130" y="305" text-anchor="middle" font-size="13" fill="#3a5a8a" font-weight="500">配当 19.8M AED</text>
+    <text x="130" y="328" text-anchor="middle" font-size="11" fill="#7d7d75">SAFE → 株式転換</text>
+
+    <!-- Investment Co (center middle) -->
+    <rect x="380" y="240" width="200" height="110" rx="10" fill="#e9f3ec" stroke="#bcd6c5" stroke-width="1.5"/>
+    <text x="480" y="270" text-anchor="middle" font-weight="600" font-size="15">投資会社</text>
+    <text x="480" y="291" text-anchor="middle" font-size="11" fill="#7d7d75">資金の中央管理</text>
+    <text x="480" y="320" text-anchor="middle" font-size="13" fill="#4f5e36" font-weight="500">受領 39.6M AED</text>
+
+    <!-- SPV (right middle) -->
+    <rect x="740" y="240" width="180" height="110" rx="10" fill="#f5efde" stroke="#d9c89a" stroke-width="1.5"/>
+    <text x="830" y="272" text-anchor="middle" font-weight="600" font-size="15">プロジェクトSPV</text>
+    <text x="830" y="304" text-anchor="middle" font-size="13" fill="#a3863f" font-weight="600">収益 88M AED</text>
+    <text x="830" y="328" text-anchor="middle" font-size="11" fill="#7d7d75">運営50% ＋ 管理5% 控除</text>
+
+    <!-- Asset Mgmt (bottom left-center) -->
+    <rect x="240" y="490" width="220" height="100" rx="10" fill="#fbeeea" stroke="#e9c8c1" stroke-width="1.5"/>
+    <text x="350" y="522" text-anchor="middle" font-weight="600" font-size="14">アセット管理会社</text>
+    <text x="350" y="544" text-anchor="middle" font-size="11" fill="#7d7d75">運営委託料（5%）</text>
+    <text x="350" y="572" text-anchor="middle" font-size="13" fill="#b94a3b" font-weight="600">4.4M AED</text>
+
+    <!-- Opex (bottom right) -->
+    <rect x="640" y="490" width="240" height="100" rx="10" fill="#f3f2ee" stroke="#cfcabd" stroke-width="1.5"/>
+    <text x="760" y="522" text-anchor="middle" font-weight="600" font-size="14">運営費</text>
+    <text x="760" y="544" text-anchor="middle" font-size="11" fill="#7d7d75">人件費・賃料・光熱費</text>
+    <text x="760" y="572" text-anchor="middle" font-size="13" fill="#4a4a45" font-weight="600">44.0M AED（50%）</text>
+
+    <!-- ① Investor → Investment Co (top edge, GREEN, rightward) -->
+    <line x1="220" y1="270" x2="380" y2="270" stroke="#3f7a5c" stroke-width="2" marker-end="url(#m-green2)"/>
+    <circle cx="300" cy="252" r="13" fill="#4f5e36"/>
+    <text x="300" y="257" text-anchor="middle" fill="#fff" font-weight="700" font-size="13">①</text>
+
+    <!-- ② Investment Co → SPV (top edge, GREEN) -->
+    <line x1="580" y1="270" x2="740" y2="270" stroke="#3f7a5c" stroke-width="2" marker-end="url(#m-green2)"/>
+    <circle cx="660" cy="252" r="13" fill="#4f5e36"/>
+    <text x="660" y="257" text-anchor="middle" fill="#fff" font-weight="700" font-size="13">②</text>
+
+    <!-- ③ SPV → Investment Co (bottom edge, RED, return — 純利益 39.6M) -->
+    <line x1="740" y1="320" x2="580" y2="320" stroke="#b94a3b" stroke-width="2" marker-end="url(#m-red2)"/>
+    <text x="660" y="338" text-anchor="middle" font-size="11.5" fill="#b94a3b" font-weight="500">純利益 39.6M</text>
+    <circle cx="660" cy="358" r="13" fill="#b94a3b"/>
+    <text x="660" y="363" text-anchor="middle" fill="#fff" font-weight="700" font-size="13">③</text>
+
+    <!-- ④ Investment Co → Investor (bottom edge, RED, distribution) -->
+    <line x1="380" y1="320" x2="220" y2="320" stroke="#b94a3b" stroke-width="2" marker-end="url(#m-red2)"/>
+    <text x="300" y="338" text-anchor="middle" font-size="11.5" fill="#b94a3b" font-weight="500">配当 19.8M</text>
+    <circle cx="300" cy="358" r="13" fill="#b94a3b"/>
+    <text x="300" y="363" text-anchor="middle" fill="#fff" font-weight="700" font-size="13">④</text>
+
+    <!-- ⑤ Investment Co → Holding (upward, RED, 残額 19.8M) -->
+    <path d="M 510 240 L 510 120" fill="none" stroke="#b94a3b" stroke-width="2" marker-end="url(#m-red2)"/>
+    <text x="525" y="190" font-size="12" fill="#b94a3b" font-weight="500">19.8M</text>
+    <circle cx="495" cy="180" r="13" fill="#b94a3b"/>
+    <text x="495" y="185" text-anchor="middle" fill="#fff" font-weight="700" font-size="13">⑤</text>
+
+    <!-- ⑥ Asset Mgmt → Holding (curved up dashed, 管理料 4.4M, 同オーナー) -->
+    <path d="M 320 490 Q 200 320 200 200 Q 200 110 360 80" fill="none" stroke="#b94a3b" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#m-red2)"/>
+    <rect x="60" y="180" width="135" height="38" rx="5" fill="#fff" stroke="#e9c8c1"/>
+    <text x="127" y="197" text-anchor="middle" font-size="12" fill="#b94a3b" font-weight="600">⑥ 管理料 4.4M</text>
+    <text x="127" y="212" text-anchor="middle" font-size="10.5" fill="#7d7d75">（同オーナー）</text>
+
+    <!-- SPV → Asset Mgmt (運営委託料 going down-left) -->
+    <path d="M 760 350 Q 640 420 460 510" fill="none" stroke="#b94a3b" stroke-width="1.6" marker-end="url(#m-red2)"/>
+    <rect x="540" y="430" width="120" height="22" rx="4" fill="#fff" stroke="#e9c8c1"/>
+    <text x="600" y="445" text-anchor="middle" font-size="11.5" fill="#b94a3b" font-weight="500">管理料</text>
+
+    <!-- SPV → Opex (運営費 down) -->
+    <path d="M 850 350 L 800 490" fill="none" stroke="#7d7d75" stroke-width="1.6" marker-end="url(#m-gray2)"/>
+    <rect x="820" y="410" width="80" height="22" rx="4" fill="#fff" stroke="#cfcabd"/>
+    <text x="860" y="425" text-anchor="middle" font-size="11.5" fill="#7d7d75" font-weight="500">運営費</text>
+  </svg>
+
+  <div class="legend">
+    <span class="item"><span class="swatch green"></span> ①② 資金の流れ（投入）</span>
+    <span class="item"><span class="swatch red"></span> ③④⑤ 還流・配当</span>
+    <span class="item"><span class="swatch red dashed"></span> ⑥ 管理料（同オーナー間）</span>
+    <span class="item"><span class="swatch gray"></span> 運営費</span>
   </div>
 
   <ol class="steps">
