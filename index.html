@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AYUVA — UAEコーポレートストラクチャー / 投資スキーム</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafaf7;
+  --ink:#1c1c19;
+  --ink-soft:#4a4a45;
+  --muted:#7d7d75;
+  --line:#e6e3da;
+  --line-strong:#cfcabd;
+  --paper:#ffffff;
+  --accent:#7a8a5c;     /* bamboo green */
+  --accent-deep:#4f5e36;
+  --warn:#b94a3b;
+  --warn-bg:#fbeeea;
+  --ok:#3f7a5c;
+  --ok-bg:#e9f3ec;
+  --info:#3a5a8a;
+  --info-bg:#ecf1f8;
+  --gold:#a3863f;
+  --gold-bg:#f5efde;
+  --neutral-bg:#f1efe8;
+  --shadow:0 1px 2px rgba(28,28,25,.04), 0 8px 24px rgba(28,28,25,.05);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+  font-family:"Noto Sans JP","Inter",-apple-system,BlinkMacSystemFont,sans-serif;
+  font-weight:400; line-height:1.7; letter-spacing:.01em;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:48px 28px 96px}
+header.hero{
+  padding:64px 0 40px; border-bottom:1px solid var(--line); margin-bottom:48px;
+}
+.eyebrow{
+  font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--accent-deep); font-weight:600; margin-bottom:14px;
+}
+h1{
+  font-size:clamp(28px,4.2vw,44px); line-height:1.25; margin:0 0 14px;
+  font-weight:700; letter-spacing:-.01em;
+}
+.lede{
+  color:var(--ink-soft); font-size:16px; max-width:720px; margin:0;
+}
+.toc{
+  margin-top:36px; display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px;
+}
+.toc a{
+  display:block; padding:14px 16px; background:var(--paper); border:1px solid var(--line);
+  border-radius:10px; text-decoration:none; color:var(--ink); font-size:14px;
+  transition:border-color .15s, transform .15s;
+}
+.toc a:hover{border-color:var(--accent); transform:translateY(-1px)}
+.toc a span.num{
+  display:inline-block; width:22px; color:var(--accent-deep); font-weight:600;
+}
+
+section.chapter{
+  margin:72px 0; scroll-margin-top:24px;
+}
+section.chapter > h2{
+  font-size:clamp(22px,3vw,30px); margin:0 0 6px; font-weight:700; letter-spacing:-.005em;
+}
+section.chapter > .sub{
+  color:var(--muted); font-size:14px; margin:0 0 28px;
+}
+
+.card{
+  background:var(--paper); border:1px solid var(--line); border-radius:14px;
+  padding:26px 28px; box-shadow:var(--shadow); margin:18px 0;
+}
+.card h3{margin:0 0 12px; font-size:17px; font-weight:600}
+.card p, .card li{font-size:14.5px; color:var(--ink-soft); margin:6px 0}
+.card ul{padding-left:20px; margin:8px 0}
+
+.callout{
+  border-left:3px solid var(--accent); padding:18px 22px; border-radius:0 10px 10px 0;
+  background:var(--ok-bg); margin:18px 0;
+}
+.callout.warn{background:var(--warn-bg); border-color:var(--warn)}
+.callout.info{background:var(--info-bg); border-color:var(--info)}
+.callout.gold{background:var(--gold-bg); border-color:var(--gold)}
+.callout h3{margin:0 0 8px; font-size:15px; font-weight:600; display:flex; gap:8px; align-items:center}
+.callout p, .callout li{font-size:14px; margin:4px 0}
+.callout .pill{
+  display:inline-block; font-size:11px; padding:2px 8px; border-radius:99px;
+  background:var(--warn); color:#fff; font-weight:600; letter-spacing:.05em;
+}
+
+/* SAFE flow */
+.flow{
+  display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:14px; align-items:center;
+  margin:24px 0;
+}
+.flow .node{
+  background:var(--paper); border:1px solid var(--line-strong); border-radius:12px;
+  padding:18px 16px; text-align:center; min-height:108px; display:flex; flex-direction:column;
+  justify-content:center;
+}
+.flow .node.investor{background:#ecf1f8; border-color:#c5d2e6}
+.flow .node.safe{background:var(--ok-bg); border-color:#bcd6c5}
+.flow .node.equity{background:var(--gold-bg); border-color:#d9c89a}
+.flow .node b{display:block; font-size:14.5px; margin-bottom:4px}
+.flow .node small{color:var(--muted); font-size:12px; line-height:1.4}
+.flow .arrow{color:var(--ink-soft); font-size:18px; text-align:center}
+.flow .arrow small{display:block; font-size:11px; color:var(--muted); margin-top:2px}
+
+@media (max-width:760px){
+  .flow{grid-template-columns:1fr; }
+  .flow .arrow{transform:rotate(90deg); margin:0 auto}
+}
+
+/* Corp structure */
+.org{
+  display:grid; grid-template-rows:auto auto auto; gap:18px; margin:18px 0 8px;
+}
+.org .row{display:grid; gap:12px}
+.org .row.r1{grid-template-columns:1fr; justify-items:center}
+.org .row.r2{grid-template-columns:repeat(3,1fr)}
+.org .row.r3{grid-template-columns:repeat(4,1fr)}
+.org .box{
+  background:var(--paper); border:1px solid var(--line-strong); border-radius:10px;
+  padding:14px 14px; text-align:center; font-size:13.5px; min-height:64px;
+  display:flex; flex-direction:column; justify-content:center;
+}
+.org .box b{display:block; font-size:14px; margin-bottom:2px}
+.org .box small{color:var(--muted); font-size:11.5px}
+.org .box.holding{background:#f1efe8; border-color:#cfcabd}
+.org .box.invest{background:#e9f3ec; border-color:#bcd6c5}
+.org .box.proj{background:#ecf1f8; border-color:#c5d2e6}
+.org .box.asset{background:#fbeeea; border-color:#e9c8c1}
+.org .box.spv{background:var(--gold-bg); border-color:#d9c89a}
+.org .box.spv.dim{opacity:.55}
+@media (max-width:760px){
+  .org .row.r2,.org .row.r3{grid-template-columns:1fr 1fr}
+}
+
+/* CVML scope */
+.scope-grid{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:18px 0;
+}
+.scope{
+  border:1.5px dashed var(--warn); border-radius:12px; padding:18px;
+  background:var(--paper);
+}
+.scope .tag{
+  display:inline-block; font-size:11px; padding:2px 8px; border-radius:99px;
+  background:var(--warn); color:#fff; letter-spacing:.05em; margin-bottom:8px;
+}
+.scope h4{margin:0 0 4px; font-size:15px; font-weight:600}
+.scope .price{font-size:18px; font-weight:700; color:var(--accent-deep); margin-bottom:10px}
+.scope ul{padding-left:18px; margin:8px 0; font-size:13.5px; color:var(--ink-soft)}
+.scope ul li{margin:3px 0}
+@media (max-width:760px){.scope-grid{grid-template-columns:1fr}}
+
+/* Cash flow numbered */
+.flow88{
+  display:grid; grid-template-columns:1.1fr .9fr 1fr; gap:14px; margin:20px 0;
+}
+.flow88 .node{
+  background:var(--paper); border:1px solid var(--line-strong); border-radius:12px;
+  padding:18px 16px; min-height:120px;
+}
+.flow88 .node b{display:block; font-size:14px; margin-bottom:4px}
+.flow88 .node .amt{color:var(--accent-deep); font-weight:600; font-size:13.5px}
+.flow88 .node small{display:block; color:var(--muted); font-size:11.5px; margin-top:4px}
+@media (max-width:760px){.flow88{grid-template-columns:1fr}}
+
+.steps{margin:14px 0; padding-left:0; list-style:none}
+.steps li{
+  padding:10px 0 10px 38px; position:relative; border-top:1px solid var(--line);
+  font-size:14px; color:var(--ink-soft);
+}
+.steps li:first-child{border-top:none}
+.steps li::before{
+  content:attr(data-n); position:absolute; left:0; top:11px; width:26px; height:26px;
+  border-radius:50%; background:var(--accent); color:#fff; font-weight:600; font-size:12px;
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* breakdown bar */
+.bar{
+  display:flex; height:30px; border-radius:6px; overflow:hidden; margin:14px 0 6px;
+  font-size:11px; color:#fff; font-weight:600;
+}
+.bar > div{display:flex; align-items:center; justify-content:center; padding:0 8px}
+.bar .opex{background:#7d7d75; flex:50}
+.bar .div{background:var(--info); flex:22.5}
+.bar .founder{background:var(--accent); flex:22.5}
+.bar .mgmt{background:var(--gold); flex:5}
+.bar-legend{display:flex; flex-wrap:wrap; gap:14px; font-size:12px; color:var(--muted)}
+.bar-legend span::before{content:""; display:inline-block; width:10px; height:10px; margin-right:6px; border-radius:2px; vertical-align:middle}
+.bar-legend .l1::before{background:#7d7d75}
+.bar-legend .l2::before{background:var(--info)}
+.bar-legend .l3::before{background:var(--accent)}
+.bar-legend .l4::before{background:var(--gold)}
+
+/* 49 person rule routes */
+.routes{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:18px 0}
+.route{
+  background:var(--paper); border:1px solid var(--line-strong); border-radius:12px;
+  padding:18px; position:relative;
+}
+.route .badge{
+  position:absolute; top:-12px; left:18px; width:28px; height:28px; border-radius:50%;
+  background:var(--accent-deep); color:#fff; display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:13px;
+}
+.route h4{margin:6px 0 6px; font-size:15px; font-weight:600}
+.route ul{padding-left:18px; margin:8px 0; font-size:13.5px; color:var(--ink-soft)}
+.route .arrow-out{margin-top:10px; padding:8px 10px; background:var(--ok-bg); border-radius:6px;
+  font-size:12.5px; color:var(--ok)}
+@media (max-width:760px){.routes{grid-template-columns:1fr}}
+
+.split{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:18px 0}
+.split .col{
+  background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:20px;
+}
+.split .col.bad{border-left:3px solid var(--warn)}
+.split .col.good{border-left:3px solid var(--ok)}
+.split h4{margin:0 0 10px; font-size:14.5px; font-weight:600; display:flex; gap:8px; align-items:center}
+.split ul{padding-left:18px; margin:6px 0; font-size:13.5px; color:var(--ink-soft)}
+.split ul li{margin:3px 0}
+@media (max-width:760px){.split{grid-template-columns:1fr}}
+
+/* costs */
+.cost-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin:18px 0}
+.cost{
+  background:var(--paper); border:1px solid var(--line); border-radius:10px;
+  padding:16px; display:flex; justify-content:space-between; align-items:center;
+}
+.cost .l b{display:block; font-size:14.5px}
+.cost .l small{color:var(--muted); font-size:12px}
+.cost .price{font-size:18px; font-weight:700; color:var(--accent-deep)}
+.cost.investor{background:#e9f3ec; border-color:#bcd6c5}
+.cost.proj{background:#ecf1f8; border-color:#c5d2e6}
+.cost.asset{background:#fbeeea; border-color:#e9c8c1}
+.cost.spv{background:var(--gold-bg); border-color:#d9c89a}
+@media (max-width:760px){.cost-grid{grid-template-columns:1fr}}
+
+.fees{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:14px 0}
+.fee{
+  background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:16px; text-align:center;
+}
+.fee b{display:block; font-size:13.5px; margin-bottom:6px}
+.fee small{color:var(--muted); font-size:11.5px}
+.fee .price{font-size:17px; font-weight:700; color:var(--accent-deep); margin-top:4px}
+@media (max-width:760px){.fees{grid-template-columns:1fr}}
+
+.plans{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:18px 0}
+.plan{
+  background:var(--info-bg); border:1px solid #c5d2e6; border-radius:10px; padding:18px; text-align:center;
+}
+.plan b{display:block; font-size:14px; margin-bottom:8px}
+.plan .price{font-size:20px; font-weight:700; color:var(--info); margin:6px 0}
+.plan small{color:var(--muted); font-size:12px}
+@media (max-width:760px){.plans{grid-template-columns:1fr}}
+
+table.totals{
+  width:100%; border-collapse:collapse; margin:14px 0; font-size:14px;
+  background:var(--paper); border:1px solid var(--line); border-radius:10px; overflow:hidden;
+}
+table.totals td{padding:12px 16px; border-bottom:1px solid var(--line); color:var(--ink-soft)}
+table.totals tr:last-child td{border-bottom:none; font-weight:700; color:var(--ink); background:var(--neutral-bg)}
+table.totals td:last-child{text-align:right; font-variant-numeric:tabular-nums}
+
+footer{
+  margin-top:80px; padding-top:24px; border-top:1px solid var(--line);
+  color:var(--muted); font-size:12.5px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">AYUVA · Board Update</div>
+  <h1>UAE コーポレートストラクチャー<br/>＆ 投資スキーム概観</h1>
+  <p class="lede">
+    SAFEノート、ホールディング・SPVストラクチャー、CVML 法務サービス範囲、
+    88M AED Year 1 キャッシュフロー、金商法49人ルール、設立コスト
+    — 取締役会向けサマリーを単一ページで整理。
+  </p>
+  <nav class="toc">
+    <a href="#safe"><span class="num">01</span> SAFEノートとは</a>
+    <a href="#corp"><span class="num">02</span> コーポレートストラクチャー</a>
+    <a href="#cvml"><span class="num">03</span> CVML業務範囲</a>
+    <a href="#cashflow"><span class="num">04</span> 88M AED Year 1</a>
+    <a href="#rule49"><span class="num">05</span> 49人ルールの課題</a>
+    <a href="#cost"><span class="num">06</span> CVML主要費用</a>
+  </nav>
+</header>
+
+<!-- 01 SAFE -->
+<section class="chapter" id="safe">
+  <h2>01 — SAFEノートとは</h2>
+  <p class="sub">Simple Agreement for Future Equity（将来株式取得契約）</p>
+
+  <div class="flow">
+    <div class="node investor"><b>投資家</b><small>資金を提供</small></div>
+    <div class="arrow">→<small>資金</small></div>
+    <div class="node safe"><b>SAFEノート</b><small>株式取得の権利<br/>（株式そのものではない）</small></div>
+    <div class="arrow">⇢<small>将来転換</small></div>
+    <div class="node equity"><b>株式</b><small>所定タイミングで転換</small></div>
+  </div>
+
+  <div class="card">
+    <h3>基本情報</h3>
+    <ul>
+      <li>米国シリコンバレー発祥、日本では <b>J-KISS</b> として VC 投資の標準</li>
+      <li>「今資金を預かり、将来の所定タイミングで株式に転換」する契約</li>
+      <li>投資時点では株式ではなく「株式取得の権利」を保有</li>
+      <li>採用理由：企業価値の確定を遅らせ迅速な手続きが可能</li>
+    </ul>
+  </div>
+
+  <div class="callout">
+    <h3>早期投資家のメリット</h3>
+    <ul>
+      <li><b>バリュエーションキャップ：</b>将来の評価額に上限を設定 → 早期ほど有利</li>
+      <li><b>ディスカウント：</b>将来ラウンドの価格から割引適用 → 早期ほど多く株式取得</li>
+      <li>先行リスクへのリターンを契約に組み込み、後発投資家との公平性を確保</li>
+    </ul>
+  </div>
+
+  <div class="callout warn">
+    <h3><span class="pill">重要</span> 金商法49人ルールは完全に適用</h3>
+    <ul>
+      <li>SAFEノートは金商法上「みなし有価証券」に該当</li>
+      <li>株式ではなく権利でも、実質的な有価証券として規制対象</li>
+      <li>1オファリングあたり日本人投資家 <b>49名</b> の上限がそのまま適用</li>
+    </ul>
+    <p style="margin-top:10px"><b>「SAFEなら49人ルールを回避できる」という誤解は誤り。</b><br/>
+      → 50名以上は公募登録が必要（5,000万〜2億円のコスト）</p>
+  </div>
+</section>
+
+<!-- 02 Corporate Structure -->
+<section class="chapter" id="corp">
+  <h2>02 — AYUVAコーポレートストラクチャー</h2>
+  <p class="sub">ホールディング配下に投資・建設・運営の3レイヤー、その下に複数SPV</p>
+
+  <div class="org">
+    <div class="row r1">
+      <div class="box holding" style="min-width:260px"><b>ホールディング</b><small>既存設立済</small></div>
+    </div>
+    <div class="row r2">
+      <div class="box invest"><b>投資会社</b><small>投資家資金の受入</small></div>
+      <div class="box proj"><b>プロジェクト管理</b><small>プロジェクト建設</small></div>
+      <div class="box asset"><b>アセット管理</b><small>プロジェクト運営</small></div>
+    </div>
+    <div class="row r3">
+      <div class="box spv"><b>プロジェクト1 SPV</b><small>建設・運営</small></div>
+      <div class="box spv dim"><b>プロジェクト2 SPV</b><small>横展開・別ロケーション</small></div>
+      <div class="box spv dim"><b>プロジェクト3 SPV</b><small>横展開・別ロケーション</small></div>
+      <div class="box spv dim"><b>プロジェクト4 SPV</b><small>横展開・別ロケーション</small></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>レイヤー間のフロー</h3>
+    <ul>
+      <li><b>投資会社 → SPV：</b>資金提供</li>
+      <li><b>プロジェクト管理 → SPV：</b>建設業務 ／ <b>SPV → プロジェクト管理：</b>建設委託料</li>
+      <li><b>アセット管理 → SPV：</b>運営業務 ／ <b>SPV → アセット管理：</b>運営委託料</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 03 CVML scope -->
+<section class="chapter" id="cvml">
+  <h2>03 — CVML業務範囲</h2>
+  <p class="sub">各レイヤーで提供される法的サービス（赤枠＝CVMLが提供する範囲）</p>
+
+  <div class="scope-grid">
+    <div class="scope">
+      <span class="tag">CVML業務</span>
+      <h4>投資会社</h4>
+      <div class="price">5万 AED</div>
+      <ul>
+        <li>会社設立・登記</li>
+        <li>定款（MoA）作成</li>
+        <li>SAFEノート起案</li>
+        <li>投資契約書ドラフト</li>
+        <li>株式クラス設計</li>
+      </ul>
+    </div>
+    <div class="scope">
+      <span class="tag">CVML業務</span>
+      <h4>プロジェクト管理</h4>
+      <div class="price">3万 AED</div>
+      <ul>
+        <li>会社設立・登記</li>
+        <li>建設管理ライセンス取得</li>
+        <li>SPVとの建設契約書</li>
+        <li>契約構造設計</li>
+        <li>コーポレートガバナンス</li>
+      </ul>
+    </div>
+    <div class="scope">
+      <span class="tag">CVML業務</span>
+      <h4>アセット管理</h4>
+      <div class="price">3万 AED</div>
+      <ul>
+        <li>会社設立・登記</li>
+        <li>運営管理ライセンス取得</li>
+        <li>SPVとの運営契約書</li>
+        <li>ホテル運営契約</li>
+        <li>コーポレートガバナンス</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="scope" style="margin:18px 0">
+    <span class="tag">CVML業務（SPV毎）</span>
+    <h4>プロジェクト SPV</h4>
+    <div class="price">2万 AED / SPV</div>
+    <ul>
+      <li>SPV設立・登記</li>
+      <li>リングフェンス構造設計</li>
+      <li>株主構造設計</li>
+      <li>グループ間契約書</li>
+      <li>プロジェクト固有契約</li>
+      <li>ガバナンス書類</li>
+    </ul>
+  </div>
+
+  <div class="callout warn">
+    <h3>＋ 追加業務（全エンティティ共通）</h3>
+    <ul>
+      <li>法人税登録（3,000 AED/社）／ VAT登録（1,500 AED/社）／ ビザ申請（8,000 AED/件）</li>
+      <li>継続リテイナー（月額 1.5万〜2.9万 AED）</li>
+      <li>コーポレートタックス・VATコンサルテーション</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 04 Cashflow -->
+<section class="chapter" id="cashflow">
+  <h2>04 — 88M AED Year 1 シナリオ</h2>
+  <p class="sub">SPV収益 88M AED に対する各レイヤーへの分配</p>
+
+  <div class="flow88">
+    <div class="node" style="background:var(--info-bg); border-color:#c5d2e6">
+      <b>投資家</b>
+      <span class="amt">配当 19.8M AED</span>
+      <small>SAFE → 株式転換後の優先配当（ティア別）</small>
+    </div>
+    <div class="node" style="background:var(--ok-bg); border-color:#bcd6c5">
+      <b>投資会社</b>
+      <span class="amt">受領 39.6M AED</span>
+      <small>SPVからの純利益還流を中央管理</small>
+    </div>
+    <div class="node" style="background:var(--gold-bg); border-color:#d9c89a">
+      <b>プロジェクトSPV</b>
+      <span class="amt">収益 88M AED</span>
+      <small>運営費 50% ＋ アセット管理料 5% を控除</small>
+    </div>
+  </div>
+
+  <div class="flow88">
+    <div class="node" style="background:#fbeeea; border-color:#e9c8c1">
+      <b>アセット管理会社</b>
+      <span class="amt">運営委託料 4.4M AED（5%）</span>
+      <small>同オーナー → ホールディングへ</small>
+    </div>
+    <div class="node" style="background:#f1efe8; border-color:#cfcabd">
+      <b>ホールディング（創業者持分）</b>
+      <span class="amt">配当 19.8M ＋ 管理料 4.4M AED</span>
+      <small>創業者の総取り分 24.2M</small>
+    </div>
+    <div class="node" style="background:var(--paper)">
+      <b>運営費</b>
+      <span class="amt" style="color:var(--ink-soft)">44.0M AED（50%）</span>
+      <small>人件費・賃料・光熱費</small>
+    </div>
+  </div>
+
+  <ol class="steps">
+    <li data-n="1">投資家 → 投資会社（SAFEノート、初期資金提供）</li>
+    <li data-n="2">投資会社 → SPV（資本配分）／ SPV内：運営費 50% ＋ アセット管理料 5% 控除</li>
+    <li data-n="3">SPV → 投資会社（純利益 39.6M AED 還流）</li>
+    <li data-n="4">投資会社 → 投資家（配当 19.8M 優先支払 / ティア別）</li>
+    <li data-n="5">投資会社 → ホールディング（残額 19.8M AED）</li>
+    <li data-n="6">アセット管理会社 → ホールディング（管理料 4.4M AED、同一オーナー）</li>
+  </ol>
+
+  <div class="card">
+    <h3>88M AED Year 1 の内訳</h3>
+    <div class="bar">
+      <div class="opex">運営費 50%</div>
+      <div class="div">投資家配当 22.5%</div>
+      <div class="founder">創業者持分 22.5%</div>
+      <div class="mgmt">5%</div>
+    </div>
+    <div class="bar-legend">
+      <span class="l1">運営費 44.0M（50%）</span>
+      <span class="l2">投資家配当 19.8M（22.5%）</span>
+      <span class="l3">創業者持分 19.8M（22.5%）</span>
+      <span class="l4">管理料 4.4M（5%）</span>
+    </div>
+  </div>
+</section>
+
+<!-- 05 49 person rule -->
+<section class="chapter" id="rule49">
+  <h2>05 — 49人ルール（金商法）の課題</h2>
+  <p class="sub">日本人投資家からの資金調達における最大の構造的制約</p>
+
+  <div class="callout warn">
+    <h3><span class="pill">制約</span> 制約条件</h3>
+    <ul>
+      <li>日本では1オファリングあたり投資家 <b>49人</b> までが上限</li>
+      <li>SAFEノートにも完全に適用される（回避不可）</li>
+      <li>公募登録はコスト（5,000万〜2億円）と時間（6〜12ヶ月）から見送り</li>
+    </ul>
+  </div>
+
+  <h3 style="margin:28px 0 8px; font-size:18px">検討中の合法的3ルート</h3>
+  <div class="routes">
+    <div class="route">
+      <div class="badge">1</div>
+      <h4>海外投資家への分散</h4>
+      <small style="color:var(--muted)">対象地域：</small>
+      <ul>
+        <li>UAE、GCC諸国</li>
+        <li>シンガポール、香港</li>
+        <li>ヨーロッパ</li>
+      </ul>
+      <div class="arrow-out">→ 49人ルール対象外 ／ 制限なし</div>
+    </div>
+    <div class="route">
+      <div class="badge">2</div>
+      <h4>フェーズ型オファリング</h4>
+      <small style="color:var(--muted)">3ラウンド構成：</small>
+      <ul>
+        <li>プレ・プレセール</li>
+        <li>プレセール</li>
+        <li>メインセール</li>
+      </ul>
+      <div class="arrow-out">→ 各6ヶ月の間隔／ 各49人＋実質的差別化</div>
+    </div>
+    <div class="route">
+      <div class="badge">3</div>
+      <h4>日本の登録ブローカー起用</h4>
+      <small style="color:var(--muted)">第二種金融商品取引業者ライセンス</small>
+      <ul>
+        <li>コスト：3〜7%</li>
+        <li>＋ セットアップ費用</li>
+      </ul>
+      <div class="arrow-out">→ 49人超の規模拡大可</div>
+    </div>
+  </div>
+
+  <h3 style="margin:28px 0 8px; font-size:16px">ルート2に必須：6ヶ月沈黙期間ルール</h3>
+  <div class="split">
+    <div class="col bad">
+      <h4>✕ 禁止事項 — 日本人投資家への勧誘一切</h4>
+      <ul>
+        <li>メール・DM</li>
+        <li>ピッチ・プレゼン</li>
+        <li>口頭での投資言及</li>
+        <li>ロードショー</li>
+        <li>次回ラウンド予告</li>
+        <li>ウェイトリスト構築</li>
+        <li>SNS投資関連発信</li>
+        <li>「将来投資できますよ」発言</li>
+        <li>第三者経由の紹介</li>
+        <li>既存投資家への Phase 2 勧誘</li>
+      </ul>
+      <p style="font-size:12.5px; color:var(--warn); margin-top:10px">
+        勧誘と取られる行為すべて沈黙期間中は不可<br/>
+        違反 → 構造全体崩壊リスク
+      </p>
+    </div>
+    <div class="col good">
+      <h4>✓ 継続可能な活動 — 事業運営は通常通り</h4>
+      <ul>
+        <li>ブランドマーケティング</li>
+        <li>顧客（ゲスト・会員）募集</li>
+        <li>非日本人投資家への募集（UAE、GCC、欧州、他アジア）</li>
+        <li>既存投資家への運営報告</li>
+        <li>建設・運営業務</li>
+        <li>採用・チームビルディング</li>
+        <li>パートナーシップ構築</li>
+        <li>PR・メディア露出（事業内容の紹介に限定）</li>
+      </ul>
+      <p style="font-size:12.5px; color:var(--ok); margin-top:10px">
+        「投資の話をしないなら、基本的に何でもOK」<br/>
+        事業運営に支障なし
+      </p>
+    </div>
+  </div>
+
+  <div class="callout gold">
+    <h3>ルート3の詳細：ブローカー・ディーラールート（調査中）</h3>
+    <ul>
+      <li><b>ライセンス：</b>第二種金融商品取引業者</li>
+      <li><b>想定コスト：</b>調達資本の 3〜7% ＋ セットアップ 500万〜3,000万円 ＋ 年次継続費</li>
+      <li><b>紹介：</b>弁護士から適格業者の紹介予定</li>
+      <li><b>トレードオフ：</b>コスト vs 49人超の規模拡大可能性</li>
+    </ul>
+    <p style="margin-top:8px; font-size:13px"><b>次のステップ：</b>業者調査中・候補リストと見積取得</p>
+  </div>
+
+  <div class="callout">
+    <h3>推奨アプローチ：3ルートの組み合わせ</h3>
+    <ul>
+      <li>ルート1（海外投資家）＋ ルート2（フェーズ型）を基本戦略</li>
+      <li>ルート3（ブローカー起用）は規模拡大時のオプションとして検討</li>
+      <li>全ルートともに弁護士の書面意見および法令遵守体制が前提</li>
+    </ul>
+    <p style="font-size:12.5px; color:var(--muted); margin-top:8px">
+      補足：ルート2は沈黙期間ルールが必須要件 ／ ルート1・ルート3は沈黙期間の制約を直接受けない（独立した運用が可能）
+    </p>
+  </div>
+</section>
+
+<!-- 06 Costs -->
+<section class="chapter" id="cost">
+  <h2>06 — CVML主要費用</h2>
+  <p class="sub">提案書ベースのコスト概算</p>
+
+  <h3 style="margin:18px 0 8px; font-size:15px">エンティティ設立費用（一括）</h3>
+  <div class="cost-grid">
+    <div class="cost investor">
+      <div class="l"><b>投資会社</b><small>Investment Company</small></div>
+      <div class="price">5万 AED</div>
+    </div>
+    <div class="cost proj">
+      <div class="l"><b>プロジェクト管理</b><small>Project Management</small></div>
+      <div class="price">3万 AED</div>
+    </div>
+    <div class="cost asset">
+      <div class="l"><b>アセット管理</b><small>Asset Management</small></div>
+      <div class="price">3万 AED</div>
+    </div>
+    <div class="cost spv">
+      <div class="l"><b>プロジェクトSPV</b><small>1社あたり</small></div>
+      <div class="price">2万 AED</div>
+    </div>
+  </div>
+
+  <h3 style="margin:18px 0 8px; font-size:15px">登録・申請費用（社毎）</h3>
+  <div class="fees">
+    <div class="fee"><b>法人税登録</b><small>1社あたり</small><div class="price">3,000 AED</div></div>
+    <div class="fee"><b>VAT登録</b><small>1社あたり</small><div class="price">1,500 AED</div></div>
+    <div class="fee"><b>ビザ</b><small>1件あたり</small><div class="price">8,000 AED</div></div>
+  </div>
+
+  <h3 style="margin:18px 0 8px; font-size:15px">リテイナー選択肢（月額・継続契約）</h3>
+  <div class="plans">
+    <div class="plan"><b>プラン1</b><div class="price">1.5万 AED</div><small>基本プラン</small></div>
+    <div class="plan"><b>プラン2</b><div class="price">2.0万 AED</div><small>標準プラン</small></div>
+    <div class="plan"><b>プラン3</b><div class="price">2.9万 AED</div><small>フルサポート</small></div>
+  </div>
+
+  <div class="callout warn">
+    <h3>注意：CVMLスコープ外（別途予算化が必要）</h3>
+    <ul>
+      <li>会計・記帳業務</li>
+      <li>税務コンプライアンス</li>
+      <li>監査済財務諸表</li>
+      <li>D&O保険</li>
+    </ul>
+  </div>
+
+  <h3 style="margin:18px 0 8px; font-size:15px">想定総コスト試算（参考）</h3>
+  <table class="totals">
+    <tr><td>投資会社（5万）＋ プロジェクト管理（3万）＋ アセット管理（3万）</td><td>11万 AED</td></tr>
+    <tr><td>SPV ×3社（2万 × 3）</td><td>6万 AED</td></tr>
+    <tr><td>法人税登録 ×6社（3,000 × 6）＋ VAT登録 ×6社（1,500 × 6）</td><td>2.7万 AED</td></tr>
+    <tr><td>ビザ ×3件（8,000 × 3）</td><td>2.4万 AED</td></tr>
+    <tr><td>初期セットアップ合計</td><td>約 22.1万 AED</td></tr>
+    <tr><td>＋ 月額リテイナー（プラン2選択時）</td><td>年間 24万 AED</td></tr>
+  </table>
+</section>
+
+<footer>
+  <span>AYUVA · Board Update — UAE Naming &amp; Corporate Structure</span>
+  <span>Source: AYUVA_Board_Update_Combined.pdf</span>
+</footer>
+
+</div>
+</body>
+</html>
